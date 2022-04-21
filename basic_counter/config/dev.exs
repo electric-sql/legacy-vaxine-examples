@@ -26,7 +26,9 @@ config :basic_counter, CountersWeb.Endpoint,
   secret_key_base: "mvfcyp1Ix0HaDu4OlCsXNJuIp+DW6cXePrjgV9W7RDc5/HNIIADqsmzKrHlNOLnj",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    # Start the Tailwind watcher
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
