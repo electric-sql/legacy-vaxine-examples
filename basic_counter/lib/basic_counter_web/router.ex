@@ -19,9 +19,4 @@ defmodule CountersWeb.Router do
 
     get "/", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", CountersWeb do
-  #   pipe_through :api
-  # end
 end

@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: Averta;
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/AvertaStandard-Regular.woff2") format("woff2");
+  }
+
+  @font-face {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 300;
+    src: url("/fonts/Poppins-Light.woff2") format("woff2"),
+      url("/fonts/Poppins-Light.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    src: url("/fonts/Poppins-Medium.woff2") format("woff2"),
+      url("/fonts/Poppins-Medium.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    src: url("/fonts/Poppins-SemiBold.woff2") format("woff2"),
+      url("/fonts/Poppins-SemiBold.woff") format("woff");
+  }
+}
