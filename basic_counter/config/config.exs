@@ -29,15 +29,16 @@ config :esbuild,
   ]
 
 # Configure TailwindCSS
-config :tailwind, version: "3.0.24", default: [
-  args: ~w(
+config :tailwind,
+  version: "3.0.24",
+  default: [
+    args: ~w(
     --config=tailwind.config.js
     --input=css/app.css
     --output=../priv/static/assets/app.css
   ),
-  cd: Path.expand("../assets", __DIR__)
-]
-
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
