@@ -53,11 +53,7 @@ defmodule CountersWeb.Live.ReactionCounter do
   end
 
   def update(assigns, socket) do
-    socket =
-      socket
-      |> assign(assigns)
-
-    {:ok, socket}
+    {:ok, assign(socket, assigns)}
   end
 
   def handle_event("inc", _, socket) do
