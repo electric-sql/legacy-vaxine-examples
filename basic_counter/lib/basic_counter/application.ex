@@ -14,6 +14,8 @@ defmodule Counters.Application do
       CountersWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Counters.PubSub},
+      # Start the counter checker
+      {Counters.Reactions.Checker, []},
       # Start the Endpoint (http/https)
       CountersWeb.Endpoint
       # Start a worker by calling: Counters.Worker.start_link(arg)

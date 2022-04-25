@@ -34,7 +34,12 @@ defmodule CountersWeb.Live.ReactionCounter do
   end
 
   def preload(assigns) do
-    Enum.map(assigns, &Map.put(&1, :count, Counters.Reactions.get_reaction_count!(&1.id)))
+    assigns =
+      Enum.map(assigns, &Map.put(&1, :count, Counters.Reactions.get_reaction_count!(&1.id)))
+
+    Counters.Reactions.Checker.add_ids(Enum.map(assigns, & &1.id))
+
+    assigns
   end
 
   def mount(socket) do
