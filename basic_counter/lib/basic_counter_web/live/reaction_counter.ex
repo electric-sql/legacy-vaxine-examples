@@ -16,14 +16,18 @@ defmodule CountersWeb.Live.ReactionCounter do
         >
           🤩 <%= @count %>
         </button>
-        Write took <%= @write_time |> us_to_ms %> ms, avg:
-        <%= @write_time_history |> get_avg_write_time |> us_to_ms %> ms
+        <%= if @write_time do %>
+          Write took <%= @write_time |> us_to_ms() %> ms,
+          avg: <%= @write_time_history |> get_avg_write_time() |> us_to_ms() %> ms
+        <% else %>
+          Click the reaction to measure write latency!
+        <% end %>
       </div>
     </div>
     """
   end
 
-  defp get_avg_write_time([]), do: 0
+  defp get_avg_write_time([]), do: nil
 
   defp get_avg_write_time(write_time_history) do
     round(Enum.sum(write_time_history) / length(write_time_history))
@@ -46,7 +50,7 @@ defmodule CountersWeb.Live.ReactionCounter do
     socket =
       socket
       |> assign(:count, 0)
-      |> assign(:write_time, 0)
+      |> assign(:write_time, nil)
       |> assign(:write_time_history, [])
 
     {:ok, socket}
