@@ -1,5 +1,6 @@
 defmodule CountersWeb.Live.ReactionCounter do
   use CountersWeb, :live_component
+  @topic "reactions"
 
   def render(assigns) do
     ~H"""
@@ -14,7 +15,8 @@ defmodule CountersWeb.Live.ReactionCounter do
           phx-target={@myself}
         >
           🤩 <%= @count %>
-        </button> Write took <%= @write_time |> us_to_ms %> ms, avg:
+        </button>
+        Write took <%= @write_time |> us_to_ms %> ms, avg:
         <%= @write_time_history |> get_avg_write_time |> us_to_ms %> ms
       </div>
     </div>
@@ -31,6 +33,10 @@ defmodule CountersWeb.Live.ReactionCounter do
     Float.round(number / 1000, 2)
   end
 
+  def preload(assigns) do
+    Enum.map(assigns, &Map.put(&1, :count, Counters.Reactions.get_reaction_count!(&1.id)))
+  end
+
   def mount(socket) do
     socket =
       socket
@@ -45,7 +51,6 @@ defmodule CountersWeb.Live.ReactionCounter do
     socket =
       socket
       |> assign(assigns)
-      |> assign(:count, Counters.Reactions.get_reaction_count!(assigns.id))
 
     {:ok, socket}
   end
@@ -53,6 +58,8 @@ defmodule CountersWeb.Live.ReactionCounter do
   def handle_event("inc", _, socket) do
     {time, count} =
       :timer.tc(&Counters.Reactions.increment_reaction_count!/1, [socket.assigns.id])
+
+    CountersWeb.Endpoint.broadcast_from!(self(), @topic, socket.assigns.id, count)
 
     socket =
       socket
