@@ -10,15 +10,9 @@ defmodule CountersWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", CountersWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
-
-    live "/reactions", ReactionLive.Index, :index
+    live "/", ReactionLive.Index, :index
   end
 end
