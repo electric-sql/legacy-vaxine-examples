@@ -10,7 +10,7 @@ defmodule CountersWeb.Live.ReactionCounter do
       </h3>
       <div>
         <button
-          class="bg-accent p-2 w-20 text-accent-foreground font-bold rounded-lg"
+          class="bg-accent hover:bg-accent-light transition-colors p-2 w-20 text-accent-foreground font-bold rounded"
           phx-click="inc"
           phx-target={@myself}
         >

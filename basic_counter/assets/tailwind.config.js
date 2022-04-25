@@ -15,7 +15,7 @@ module.exports = {
       },
       colors: {
         'primary': '#2d3343',
-        'accent': '#00cac6',
+        'accent': '#00B0AD',
         'accent-light': '#00cac6',
         'accent-foreground': '#ffffff',
         'blackish': '#212529',
