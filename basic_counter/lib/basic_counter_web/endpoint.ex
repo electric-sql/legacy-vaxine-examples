@@ -10,7 +10,7 @@ defmodule CountersWeb.Endpoint do
     signing_salt: "ga1Wncpf"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options], check_origin: :conn]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
