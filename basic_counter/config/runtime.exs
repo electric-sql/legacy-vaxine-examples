@@ -21,18 +21,32 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
-  database_url =
-    System.get_env("DATABASE_URL") ||
-      raise """
-      environment variable DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
-      """
+  hostname = System.get_env("DB_HOST")
+  socket_dir = System.get_env("DB_SOCKET_DIR")
+  socket = System.get_env("DB_SOCKET")
+
+  if !(hostname || socket_dir || socket),
+    do:
+      raise("""
+      Please specify at least one environment variable to connect to the database:
+        - use `DB_HOST` to connect to the server hostname
+        - use `DB_SOCKET_DIR` to connect via a unix socket derived from the port
+        - use `DB_SOCKET` to connect via a unix socket in the given path
+      """)
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
   config :basic_counter, Counters.Repo,
     # ssl: true,
-    url: database_url,
+    username: System.get_env("DB_USER") || "postgres",
+    password: System.get_env("DB_PASS"),
+    port: String.to_integer(System.get_env("DB_PORT") || "5432"),
+    database:
+      System.get_env("DB_NAME") ||
+        raise("Please specify a database with DB_NAME environment variable"),
+    hostname: System.get_env("DB_HOST"),
+    socket_dir: System.get_env("DB_SOCKET_DIR"),
+    socket: System.get_env("DB_SOCKET"),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 
