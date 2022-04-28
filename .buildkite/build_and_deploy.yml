@@ -9,5 +9,6 @@ steps:
           watch:
             - path: "basic_counter/"
               config:
+                group: ":rocket: Basic counter example"
                 label: ":pipeline: Building basic_counter"
                 command: buildkite-agent pipeline upload basic_counter/.buildkite/build_and_deploy.yml
