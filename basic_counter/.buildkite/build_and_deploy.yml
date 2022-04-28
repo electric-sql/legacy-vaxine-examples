@@ -1,0 +1,4 @@
+steps:
+  - command:
+    - "cd basic_counter && docker build -t europe-docker.pkg.dev/vaxine/vaxineio-examples/basic_counter:latest ."
+    - "docker push europe-docker.pkg.dev/vaxine/vaxineio-examples/basic_counter:latest"
