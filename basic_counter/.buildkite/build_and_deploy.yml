@@ -1,0 +1,10 @@
+env:
+  IMAGE_NAME: basic_counter
+
+steps:
+  - label: ":whale: Build & push the docker container"
+    command:
+      - "SHORTSHA=$(echo $BUILDKITE_COMMIT | head -c 7)"
+      - "cd basic_counter && docker build -t ${DOCKER_REPO?}/${IMAGE_NAME?}:latest -t ${DOCKER_REPO?}/${IMAGE_NAME?}:$$SHORTSHA ."
+      - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}:$$SHORTSHA"
+      - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}:latest"

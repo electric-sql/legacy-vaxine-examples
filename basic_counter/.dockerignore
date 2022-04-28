@@ -24,6 +24,9 @@
 !.git/HEAD
 !.git/refs
 
+# Infrastructure files
+.buildkite/
+
 # Common development/test artifacts
 /cover/
 /doc/
