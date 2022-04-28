@@ -5,7 +5,7 @@ env:
 steps:
   - label: ":whale: Build & push the docker container"
     command:
-      - "SHORTSHA=$(echo $BUILDKITE_COMMIT | head -c 7)"
+      - "export SHORTSHA=$(echo $BUILDKITE_COMMIT | head -c 7)"
       - "cd basic_counter && docker build -t $REPO/$IMAGE:latest -t $REPO/$IMAGE:$SHORTSHA ."
       - "docker push $REPO/$IMAGE:$SHORTSHA"
       - "docker push $REPO/$IMAGE:latest"
