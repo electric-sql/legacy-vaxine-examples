@@ -3,8 +3,8 @@
 set -euo pipefail
 
 # Set up a variable to hold the meta-data from your block step
-DEMO_NAME="$(buildkite-agent meta-data get image_tag)"
-DEMO_IMAGE_TAG="$(buildkite-agent meta-data get demo_name)"
+DEMO_NAME="$(buildkite-agent meta-data get demo_name)"
+DEMO_IMAGE_TAG="$(buildkite-agent meta-data get image_tag)"
 
 # Create a pipeline with your trigger step
 PIPELINE="steps:
