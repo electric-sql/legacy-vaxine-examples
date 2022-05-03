@@ -4,7 +4,7 @@ defmodule CountersWeb.Live.ReactionCounter do
 
   def render(assigns) do
     ~H"""
-    <div class="my-4 bg-white p-4 rounded shadow p-4 dark:bg-blackish">
+    <div class="my-4 bg-white p-4 rounded shadow dark:bg-blackish">
       <h3 class="text-xl mb-2"><%= render_slot(@inner_block) %></h3>
       <div class="">
         <button
