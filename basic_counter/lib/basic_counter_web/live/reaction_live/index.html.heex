@@ -1,17 +1,25 @@
 <div class="mt-8">
-  <h2 class="font-poppins text-2xl">Which application of Vaxine are you most excited about?</h2>
-
-  <div>
-    <.live_component module={ReactionCounter} id="multiplayer-gaming" emoji="🎮">
-      Easily-synchronized multiplayer games
+  <h1 class="font-poppins text-3xl mt-10 mb-3">
+    Basic Counter
+  </h1>
+  <p>
+    What type of application are you hoping to develop with Vaxine?
+  </p>
+  <div class="mt-8">
+    <.live_component module={ReactionCounter} id="multi-user">
+      Multi-user collaboration apps
     </.live_component>
 
-    <.live_component module={ReactionCounter} id="multiuser-apps" emoji="🖱️">
-      Apps with multi-user collaboration superpowers
+    <.live_component module={ReactionCounter} id="multiplayer">
+      Massively multiplayer games
     </.live_component>
 
-    <.live_component module={ReactionCounter} id="geodistributed-apps" emoji="🗺️">
-      Geo-distributed apps with no interaction latency
+    <.live_component module={ReactionCounter} id="geo-distributed">
+      Low-latency geo-distributed apps
+    </.live_component>
+
+    <.live_component module={ReactionCounter} id="other">
+      Other - something else
     </.live_component>
   </div>
 
