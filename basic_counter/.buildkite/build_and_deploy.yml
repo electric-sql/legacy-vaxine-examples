@@ -1,3 +1,7 @@
+agent:
+  docker: true
+  gcp: true
+
 env:
   IMAGE_NAME: basic_counter
 
