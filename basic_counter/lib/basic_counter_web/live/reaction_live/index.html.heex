@@ -1,4 +1,4 @@
-<div class="mt-8">
+<div class="mt-8 max-w-4xl">
   <h1 class="font-poppins text-3xl mt-10 mb-3">
     Basic Counter
   </h1>
@@ -23,21 +23,31 @@
     </.live_component>
   </div>
 
-  <hr class="border-primary mt-16 mb-4" />
-  <div class="prose">
-    <h2 class="font-poppins text-2xl">What's all this?</h2>
-    <p>
-      This is a simple counter demo utilizing the geo-distributed
-      <a href="https://vaxine.io">Vaxine database</a>
-      .
-      It demonstrates how geo-distributed databases help with write-path latency even for such simple applications as a list of counters.
-      You can find the source code of this demo and instructions on how to run it yourself
-      <a href="https://github.com/vaxine-io/examples/blob/main/basic_counter">on GitHub</a>.
+  <div class="mt-12 mb-8">
+    <h2 class="font-poppins text-2xl mb-3">
+      What is this?
+    </h2>
+    <p class="mb-3">
+      This is a simple example application demonstrating use of
+      <a href="https://vaxine.io">
+        Vaxine</a>.
+      Vaxine is a geo-distributed, rich-CRDT database. This example app
+      showcases low-latency write operations to a Counter CRDT object.
     </p>
-    <p>
-      But that's not all! To find out more about how geo-distribution affects latency for users, and how Vaxine can help with that
-      — head over to our <a>advanced counter demo</a>
-      . It will show you how the users around the world percieve the same application.
+    <p class="mb-3">
+      You can find the source code of this demo and instructions
+      on how to run it yourself
+      <a href="https://github.com/vaxine-io/examples/blob/main/basic_counter">
+        on GitHub</a>.
+    </p>
+    <p class="mb-3">
+      To find out more about how geo-distribution affects latency and
+      how Vaxine compares with other database systems, head over to our
+      <a>
+        Advanced Counter
+      </a>
+      demo, which shows you how users around the world percieve the
+      same application.
     </p>
   </div>
 </div>

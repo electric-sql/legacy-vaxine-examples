@@ -34,3 +34,11 @@
       url("/fonts/Poppins-SemiBold.woff") format("woff");
   }
 }
+
+a {
+  color: #00B0AD;
+  text-decoration: none;
+}
+a:hover {
+  color: #009794;
+}
