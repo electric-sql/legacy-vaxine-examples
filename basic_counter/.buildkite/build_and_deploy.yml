@@ -5,6 +5,11 @@ steps:
   - label: ":whale: Build & push the docker container"
     command:
       - "SHORTSHA=$(echo $BUILDKITE_COMMIT | head -c 7)"
+      - "buildkite-agent meta-data set image_tag $$SHORTSHA"
+      - "buildkite-agent meta-data set demo_name basic_counter"
       - "cd basic_counter && docker build -t ${DOCKER_REPO?}/${IMAGE_NAME?}:latest -t ${DOCKER_REPO?}/${IMAGE_NAME?}:$$SHORTSHA ."
       - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}:$$SHORTSHA"
       - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}:latest"
+  - wait
+  - label: "Prepare Deploy Trigger"
+    command: ".buildkite/trigger_deploy.sh"
