@@ -4,11 +4,11 @@ defmodule CountersWeb.Live.ReactionCounter do
 
   def render(assigns) do
     ~H"""
-    <div class="my-4 bg-white p-4 rounded shadow p-4">
+    <div class="my-4 bg-white p-4 rounded shadow p-4 dark:bg-blackish">
       <h3 class="text-xl mb-2"><%= render_slot(@inner_block) %></h3>
       <div class="">
         <button
-          class="bg-accent hover:bg-accent-light transition-colors p-2 w-20 text-accent-foreground font-bold rounded"
+          class="bg-accent hover:bg-accent-light dark:bg-accent-dark dark:hover:bg-accent transition-colors p-2 w-20 text-accent-foreground font-bold rounded"
           phx-click="inc"
           phx-target={@myself}
         >

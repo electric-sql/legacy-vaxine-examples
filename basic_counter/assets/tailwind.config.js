@@ -20,6 +20,9 @@ module.exports = {
         'accent-dark': '#009794',
         'accent-foreground': '#ffffff',
         'blackish': '#212529',
+        'blackish-invert': '#e4e5e6',
+        'whiteish': '#f6f8fa',
+        'whiteish-invert': '#2d3343',
         'paper': '#ded9d6',
       },
       typography: (theme) => ({
