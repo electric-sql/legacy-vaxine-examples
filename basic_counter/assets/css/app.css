@@ -35,10 +35,11 @@
   }
 }
 
-a {
-  color: #00B0AD;
-  text-decoration: none;
-}
-a:hover {
-  color: #009794;
+@layer components {
+  .vaxine-prose {
+    @apply prose
+      prose-a:no-underline hover:prose-a:text-accent-dark
+      prose-headings:font-normal
+      leading-snug prose-p:my-4
+  }
 }

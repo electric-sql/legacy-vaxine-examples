@@ -17,10 +17,19 @@ module.exports = {
         'primary': '#2d3343',
         'accent': '#00B0AD',
         'accent-light': '#00cac6',
+        'accent-dark': '#009794',
         'accent-foreground': '#ffffff',
         'blackish': '#212529',
         'paper': '#ded9d6',
-      }
+      },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-links': theme('colors.accent'),
+            '--tw-prose-invert-links': theme('colors.accent')
+          }
+        }
+      })
     },
   },
   plugins: [
