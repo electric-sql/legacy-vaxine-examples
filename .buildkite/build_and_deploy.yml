@@ -1,6 +1,9 @@
 env:
   DOCKER_REPO: europe-docker.pkg.dev/vaxine/vaxineio-examples
 
+agent:
+  os: linux
+
 steps:
   - label: ":railway_track: Choosing child pipelines"
     plugins:
