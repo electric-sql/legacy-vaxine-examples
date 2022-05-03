@@ -4,17 +4,16 @@ defmodule CountersWeb.Live.ReactionCounter do
 
   def render(assigns) do
     ~H"""
-    <div class="my-4 bg-white p-4 rounded shadow grid grid-cols-[50px_1fr] grid-rows-2 gap-x-4">
-      <span class="row-span-2 text-5xl place-self-center"><%= @emoji %></span>
-      <h3 class="text-lg mb-2"><%= render_slot(@inner_block) %></h3>
-      <div>
+    <div class="my-4 bg-white p-4 rounded shadow p-4 dark:bg-blackish">
+      <h3 class="text-xl mb-2"><%= render_slot(@inner_block) %></h3>
+      <div class="">
         <button
-          class="bg-accent hover:bg-accent-light transition-colors p-2 w-20 text-accent-foreground font-bold rounded"
+          class="bg-accent hover:bg-accent-light dark:bg-accent-dark dark:hover:bg-accent transition-colors p-2 w-20 text-accent-foreground font-bold rounded"
           phx-click="inc"
           phx-target={@myself}
         >
           🤩 <%= @count %>
-        </button>
+        </button>&nbsp;
         <%= if @write_time do %>
           Write took <%= @write_time |> us_to_ms() %> ms,
           avg: <%= @write_time_history |> get_avg_write_time() |> us_to_ms() %> ms

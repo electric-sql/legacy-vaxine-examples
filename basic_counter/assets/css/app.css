@@ -34,3 +34,12 @@
       url("/fonts/Poppins-SemiBold.woff") format("woff");
   }
 }
+
+@layer components {
+  .vaxine-prose {
+    @apply prose
+      prose-a:no-underline hover:prose-a:text-accent-dark
+      prose-headings:font-normal
+      leading-snug prose-p:my-4
+  }
+}
