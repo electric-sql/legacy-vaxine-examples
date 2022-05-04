@@ -18,6 +18,9 @@ config :basic_counter, CountersWeb.Endpoint,
   pubsub_server: Counters.PubSub,
   live_view: [signing_salt: "0WRq5nO3"]
 
+config :basic_counter, CountersWeb.Plugs.ContentSecurityPolicy,
+  frame_ancestors: ["'self'", "localhost", "vaxine-io.netlify.app", "vaxine.io", "*.vaxine.io"]
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.14.29",
