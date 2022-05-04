@@ -13,9 +13,11 @@ defmodule CountersWeb.Live.ReactionCounter do
           phx-target={@myself}
         >
           🤩 <%= @count %>
-        </button>&nbsp;
+        </button>
+        &nbsp;
         <%= if @write_time do %>
-          Write took <%= @write_time |> us_to_ms() %> ms,
+          Write took <%= @write_time |> us_to_ms() %>
+          ms,
           avg: <%= @write_time_history |> get_avg_write_time() |> us_to_ms() %> ms
         <% else %>
           Click the reaction to measure write latency!
