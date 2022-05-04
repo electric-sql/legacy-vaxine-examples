@@ -19,7 +19,7 @@ config :basic_counter, CountersWeb.Endpoint,
   live_view: [signing_salt: "0WRq5nO3"]
 
 config :basic_counter, CountersWeb.Plugs.ContentSecurityPolicy,
-  frame_ancestors: ["'self'", "localhost", "vaxine-io.netlify.app", "vaxine.io", "*.vaxine.io"]
+  frame_ancestors: ["'self'", "http://localhost:*", "vaxine-io.netlify.app", "vaxine.io", "*.vaxine.io"]
 
 # Configure esbuild (the version is required)
 config :esbuild,
