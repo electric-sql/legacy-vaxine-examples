@@ -7,11 +7,14 @@ defmodule CountersWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_basic_counter_key",
-    signing_salt: "ga1Wncpf"
+    signing_salt: "ga1Wncpf",
+    same_site: "None",
+    secure: true
   ]
 
+  # Session store was removed from LiveView since it didn't work properly in an iFrame
   socket "/live", Phoenix.LiveView.Socket,
-    websocket: [connect_info: [session: @session_options], check_origin: false]
+    websocket: [check_origin: false]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
