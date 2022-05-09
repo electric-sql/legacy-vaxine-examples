@@ -9,6 +9,17 @@
 # move said applications out of the umbrella.
 import Config
 
+config :advanced_counter_relay,
+  ecto_repos: [AdvancedCounterRelay.Repo],
+  generators: [context_app: false]
+
+# Configures the endpoint
+config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
+  url: [host: "localhost"],
+  render_errors: [view: AdvancedCounterRelay.ErrorView, accepts: ~w(json), layout: false],
+  pubsub_server: AdvancedCounterRelay.PubSub,
+  live_view: [signing_salt: "S37PFPA2"]
+
 # Configure Mix tasks and generators
 config :advanced_counter,
   ecto_repos: [AdvancedCounter.Repo]

@@ -1,5 +1,12 @@
 import Config
 
+# We don't run a server during test. If one is required,
+# you can enable the server option below.
+config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
+  http: [ip: {127, 0, 0, 1}, port: 4002],
+  secret_key_base: "76Vm6+9I0hjPZJE2ywCNS0IHCCnUTEVv54OOW8E9R68XbIo6RLzGrdr10tSTVOcG",
+  server: false
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
