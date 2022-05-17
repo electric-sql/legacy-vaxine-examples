@@ -7,5 +7,7 @@ defmodule AdvancedCounterRelay.Router do
 
   scope "/api", AdvancedCounterRelay do
     pipe_through :api
+
+    post "/increment/:database/:counter_id", IncrementController, :increment
   end
 end

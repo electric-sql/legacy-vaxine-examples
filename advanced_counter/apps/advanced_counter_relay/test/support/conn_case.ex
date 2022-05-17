@@ -32,7 +32,7 @@ defmodule AdvancedCounterRelay.ConnCase do
   end
 
   setup tags do
-    AdvancedCounterRelay.DataCase.setup_sandbox(tags)
+    AdvancedCounter.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

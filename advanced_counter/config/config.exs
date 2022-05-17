@@ -9,10 +9,6 @@
 # move said applications out of the umbrella.
 import Config
 
-config :advanced_counter_relay,
-  ecto_repos: [AdvancedCounterRelay.Repo],
-  generators: [context_app: false]
-
 # Configures the endpoint
 config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
   url: [host: "localhost"],
@@ -22,10 +18,14 @@ config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
 
 # Configure Mix tasks and generators
 config :advanced_counter,
-  ecto_repos: [AdvancedCounter.Repo]
+  ecto_repos: [AdvancedCounter.Repos.CloudSql]
 
 config :advanced_counter_web,
-  ecto_repos: [AdvancedCounter.Repo],
+  ecto_repos: [AdvancedCounter.Repos.CloudSql],
+  generators: [context_app: :advanced_counter]
+
+config :advanced_counter_relay,
+  ecto_repos: [AdvancedCounter.Repos.CloudSql],
   generators: [context_app: :advanced_counter]
 
 # Configures the endpoint
