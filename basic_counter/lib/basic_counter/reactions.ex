@@ -11,11 +11,19 @@ defmodule Counters.Reactions do
   @doc """
   Gets a single reaction.
   """
-  def get_reaction_count!(id), do: Repo.get!(Reaction, id).count
+  def get_reaction_count!(id) do
+    case Repo.get(Reaction, id) do
+      nil -> 0
+      %{count: count} -> count
+    end
+  end
 
   def increment_reaction_count!(id) do
-    from(r in Reaction, where: r.id == ^id, select: r.count)
-    |> Repo.update_all(inc: [count: 1])
-    |> then(fn {_, [result]} -> result end)
+    reaction = Repo.get(Reaction, id) || %Reaction{id: id, count: 0}
+
+    reaction
+    |> Reaction.increment()
+    |> Repo.insert_or_update!()
+    |> Map.fetch!(:count)
   end
 end
