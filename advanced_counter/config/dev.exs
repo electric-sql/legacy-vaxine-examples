@@ -41,7 +41,7 @@ config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
 # different ports.
 
 # Configure your database
-config :advanced_counter, AdvancedCounter.Repo,
+config :advanced_counter, AdvancedCounter.Repos.CloudSql,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
