@@ -9,13 +9,6 @@
 # move said applications out of the umbrella.
 import Config
 
-# Configures the endpoint
-config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
-  url: [host: "localhost"],
-  render_errors: [view: AdvancedCounterRelay.ErrorView, accepts: ~w(json), layout: false],
-  pubsub_server: AdvancedCounterRelay.PubSub,
-  live_view: [signing_salt: "S37PFPA2"]
-
 # Configure Mix tasks and generators
 config :advanced_counter,
   ecto_repos: [AdvancedCounter.Repos.CloudSql]
@@ -34,6 +27,12 @@ config :advanced_counter_web, AdvancedCounterWeb.Endpoint,
   render_errors: [view: AdvancedCounterWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: AdvancedCounter.PubSub,
   live_view: [signing_salt: "Muhf25ML"]
+
+# Configures the endpoint
+config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
+  url: [host: "localhost"],
+  render_errors: [view: AdvancedCounterRelay.ErrorView, accepts: ~w(json), layout: false],
+  pubsub_server: AdvancedCounter.PubSub
 
 # Configure esbuild (the version is required)
 config :esbuild,
