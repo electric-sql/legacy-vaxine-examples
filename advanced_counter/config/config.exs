@@ -11,14 +11,14 @@ import Config
 
 # Configure Mix tasks and generators
 config :advanced_counter,
-  ecto_repos: [AdvancedCounter.Repos.CloudSql]
+  ecto_repos: [AdvancedCounter.Repos.CloudSql, AdvancedCounter.Repos.Cockroach]
 
 config :advanced_counter_web,
-  ecto_repos: [AdvancedCounter.Repos.CloudSql],
+  ecto_repos: [AdvancedCounter.Repos.CloudSql, AdvancedCounter.Repos.Cockroach],
   generators: [context_app: :advanced_counter]
 
 config :advanced_counter_relay,
-  ecto_repos: [AdvancedCounter.Repos.CloudSql],
+  ecto_repos: [AdvancedCounter.Repos.CloudSql, AdvancedCounter.Repos.Cockroach],
   generators: [context_app: :advanced_counter]
 
 # Configures the endpoint

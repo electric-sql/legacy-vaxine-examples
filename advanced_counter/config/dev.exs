@@ -10,6 +10,15 @@ config :advanced_counter, AdvancedCounter.Repos.CloudSql,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :advanced_counter, AdvancedCounter.Repos.Cockroach,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "advanced_counter_cockroach_dev",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
