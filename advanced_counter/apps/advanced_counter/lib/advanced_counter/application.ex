@@ -10,6 +10,7 @@ defmodule AdvancedCounter.Application do
     children = [
       # Start the Ecto repository
       AdvancedCounter.Repos.CloudSql,
+      AdvancedCounter.Repos.Cockroach,
       # Start the PubSub system
       {Phoenix.PubSub, name: AdvancedCounter.PubSub}
       # Start a worker by calling: AdvancedCounter.Worker.start_link(arg)

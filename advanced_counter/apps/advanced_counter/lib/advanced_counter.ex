@@ -8,18 +8,22 @@ defmodule AdvancedCounter do
   """
 
   alias AdvancedCounter.Repos.CloudSql
+  alias AdvancedCounter.Repos.Cockroach
   alias AdvancedCounter.Counter
 
   import Ecto.Query
 
   def get(db, counter_id)
   def get("cloudsql", counter_id), do: CloudSql.one(Counter, counter_id)
+  def get("cockroach", counter_id), do: Cockroach.one(Counter, counter_id)
 
   def increment(db, counter_id)
-  def increment("cloudsql", counter_id) do
-    postgres_increment_multi(counter_id)
-    |> CloudSql.transaction()
-  end
+
+  def increment("cloudsql", counter_id),
+    do: CloudSql.transaction(postgres_increment_multi(counter_id))
+
+  def increment("cockroach", counter_id),
+    do: Cockroach.transaction(postgres_increment_multi(counter_id))
 
   defp postgres_increment_multi(counter_id) do
     Ecto.Multi.new()
