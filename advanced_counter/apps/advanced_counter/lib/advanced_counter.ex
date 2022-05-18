@@ -7,18 +7,18 @@ defmodule AdvancedCounter do
   if it comes from the database, an external API or others.
   """
 
-  alias AdvancedCounter.Repos.CloudSql, as: Repo
+  alias AdvancedCounter.Repos.CloudSql
   alias AdvancedCounter.Counter
 
   import Ecto.Query
 
   def get(db, counter_id)
-  def get("cloudsql", counter_id), do: Repo.one(Counter, counter_id)
+  def get("cloudsql", counter_id), do: CloudSql.one(Counter, counter_id)
 
   def increment(db, counter_id)
   def increment("cloudsql", counter_id) do
     postgres_increment_multi(counter_id)
-    |> Repo.transaction()
+    |> CloudSql.transaction()
   end
 
   defp postgres_increment_multi(counter_id) do
