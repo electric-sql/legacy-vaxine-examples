@@ -21,34 +21,20 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
-  hostname = System.get_env("DB_HOST")
-  socket_dir = System.get_env("DB_SOCKET_DIR")
-  socket = System.get_env("DB_SOCKET")
+  hostname = System.get_env("ANTIDOTE_DB_HOST")
 
-  if !(hostname || socket_dir || socket),
+  if !(hostname),
     do:
       raise("""
       Please specify at least one environment variable to connect to the database:
-        - use `DB_HOST` to connect to the server hostname
-        - use `DB_SOCKET_DIR` to connect via a unix socket derived from the port
-        - use `DB_SOCKET` to connect via a unix socket in the given path
+        - use `ANTIDOTE_DB_HOST` to connect to the server hostname
       """)
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
   config :basic_counter, Counters.Repo,
-    # ssl: true,
-    username: System.get_env("DB_USER") || "postgres",
-    password: System.get_env("DB_PASS"),
-    port: String.to_integer(System.get_env("DB_PORT") || "5432"),
-    database:
-      System.get_env("DB_NAME") ||
-        raise("Please specify a database with DB_NAME environment variable"),
-    hostname: System.get_env("DB_HOST"),
-    socket_dir: System.get_env("DB_SOCKET_DIR"),
-    socket: System.get_env("DB_SOCKET"),
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
+    port: String.to_integer(System.get_env("ANTIDOTE_DB_PORT") || "8087"),
+    address: hostname,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

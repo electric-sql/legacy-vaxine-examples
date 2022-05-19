@@ -46,6 +46,7 @@ defmodule Counters.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:vax, git: "https://github.com/vaxine-io/vax.git", branch: "feat/raw-insert-update-impl"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end

@@ -38,8 +38,13 @@ defmodule CountersWeb.Live.ReactionCounter do
   end
 
   def preload(assigns) do
+    counts =
+      assigns
+      |> Enum.map(& &1.id)
+      |> Counters.Reactions.list_reaction_counts()
+
     assigns =
-      Enum.map(assigns, &Map.put(&1, :count, Counters.Reactions.get_reaction_count!(&1.id)))
+      Enum.map(assigns, &Map.put(&1, :count, Map.fetch!(counts, &1.id)))
 
     Counters.Reactions.Checker.add_ids(Enum.map(assigns, & &1.id))
 

@@ -1,7 +1,7 @@
 defmodule Counters.Reactions.Checker do
   use GenServer
 
-  @check_time_ms 500
+  @check_time_ms 10000
   @topic "reactions"
 
   def start_link(initial_ids) do
@@ -26,14 +26,10 @@ defmodule Counters.Reactions.Checker do
 
   @impl true
   def handle_info(:check_and_broadcast, ids) do
-    Enum.each(ids, &check_and_broadcast/1)
+    Counters.Reactions.list_reaction_counts(ids)
+    |> Enum.each(fn {id, count} -> CountersWeb.Endpoint.broadcast!(@topic, id, count) end)
 
     {:noreply, ids}
-  end
-
-  defp check_and_broadcast(id) do
-    count = Counters.Reactions.get_reaction_count!(id)
-    CountersWeb.Endpoint.broadcast!(@topic, id, count)
   end
 
   @impl true
