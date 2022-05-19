@@ -1,0 +1,46 @@
+<div class="mt-8 max-w-4xl mx-auto">
+  <h1 class="font-poppins text-3xl mt-10 mb-3">
+    Advanced Counter
+  </h1>
+  <p>
+    Click the button to increment a counter in 3 different databases from backends spread across 3 regions. It will then show the write latency from each backend to the closest database node.
+  </p>
+  <button
+    class="bg-accent hover:bg-accent-light dark:bg-accent-dark dark:hover:bg-accent transition-colors p-2 px-10 mt-3 w-auto text-accent-foreground font-bold rounded"
+    phx-click="test-latency"
+  >
+    Test global write path latency
+  </button>
+
+  <div class="my-4 bg-white p-4 rounded shadow dark:bg-blackish">
+    <table>
+      <tr>
+        <th class="font-normal"></th>
+        <%= for db <- @databases do %>
+          <th class="font-normal border-b-blackish border-b-2 p-2 px-4">
+            <%= db %>
+          </th>
+        <% end %>
+      </tr>
+      <%= for server <- @servers do %>
+        <tr>
+          <th class="font-normal p-2 pl-0 pr-4 border-b-blackish"><%= server %></th>
+          <%= for db <- @databases do %>
+            <td class="p-3 border-b-blackish">
+              <%= case @latency_map[server][db] do %>
+                <% nil -> %>
+                  &nbsp;
+                <% :loading -> %>
+                  Loading...
+                <% {:ok, value} -> %>
+                  <%= value %>ms
+                <% {:error, reason} -> %>
+                  <%= reason %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
