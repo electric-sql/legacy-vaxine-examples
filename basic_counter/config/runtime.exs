@@ -21,19 +21,19 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
-  hostname = System.get_env("DB_HOST")
+  hostname = System.get_env("ANTIDOTE_DB_HOST")
 
   if !(hostname),
     do:
       raise("""
       Please specify at least one environment variable to connect to the database:
-        - use `DB_HOST` to connect to the server hostname
+        - use `ANTIDOTE_DB_HOST` to connect to the server hostname
       """)
 
 
   config :basic_counter, Counters.Repo,
-    port: String.to_integer(System.get_env("DB_PORT") || "8087"),
-    address: System.get_env("DB_HOST"),
+    port: String.to_integer(System.get_env("ANTIDOTE_DB_PORT") || "8087"),
+    address: hostname,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
