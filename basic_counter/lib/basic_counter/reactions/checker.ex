@@ -1,7 +1,7 @@
 defmodule Counters.Reactions.Checker do
   use GenServer
 
-  @check_time_ms 10000
+  @check_time_ms 500
   @topic "reactions"
 
   def start_link(initial_ids) do
