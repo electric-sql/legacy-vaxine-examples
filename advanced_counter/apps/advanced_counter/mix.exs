@@ -23,7 +23,7 @@ defmodule AdvancedCounter.MixProject do
   def application do
     [
       mod: {AdvancedCounter.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ssl]
     ]
   end
 

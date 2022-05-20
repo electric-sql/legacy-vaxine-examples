@@ -24,7 +24,7 @@ defmodule AdvancedCounterRelay.MixProject do
   def application do
     [
       mod: {AdvancedCounterRelay.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ssl]
     ]
   end
 
