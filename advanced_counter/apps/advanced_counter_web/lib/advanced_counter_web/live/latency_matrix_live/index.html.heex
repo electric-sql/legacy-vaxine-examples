@@ -22,9 +22,9 @@
           </th>
         <% end %>
       </tr>
-      <%= for server <- @servers do %>
+      <%= for {server, name} <- @relays do %>
         <tr>
-          <th class="font-normal p-2 pl-0 pr-4 border-b-blackish"><%= server %></th>
+          <th class="font-normal p-2 pl-0 pr-4 border-b-blackish"><%= name %></th>
           <%= for db <- @databases do %>
             <td class="p-3 border-b-blackish">
               <%= case @latency_map[server][db] do %>

@@ -3,28 +3,40 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.Index do
   alias AdvancedCounterWeb.RelayIntegration
 
   @databases ["cloudsql", "cockroach"]
-  @servers [
-    "https://advanced-counter-demo--europe-west2-dgdu2db37q-nw.a.run.app",
-    "https://advanced-counter-demo--us-central1-dgdu2db37q-uc.a.run.app",
-    "https://advanced-counter-demo--asia-northeast1-dgdu2db37q-an.a.run.app"
-  ]
 
   def mount(_params, _session, socket) do
-    latency_map = Map.new(@servers, &{&1, Map.new(@databases, fn db -> {db, nil} end)})
+    relays =
+      Application.fetch_env!(:advanced_counter_web, :relay_list)
+      |> IO.inspect()
+      |> Map.new(fn {region, url} -> {url, region} end)
+
+    latency_map =
+      relays
+      |> Map.keys()
+      |> Map.new(&{&1, Map.new(@databases, fn db -> {db, nil} end)})
 
     socket =
       socket
       |> assign(:latency_map, latency_map)
-      |> assign(:servers, @servers)
+      |> assign(:relays, relays)
       |> assign(:databases, @databases)
 
     {:ok, socket}
   end
 
   def handle_event("test-latency", _, socket) do
-    RelayIntegration.stream_counter_increment(@servers, @databases, "global-latency-test")
-    |> Stream.each(&send(self(), {:relay, &1}))
-    |> Stream.run()
+    parent = self()
+
+    Task.start(fn ->
+      socket.assigns.relays
+      |> Map.keys()
+      |> RelayIntegration.stream_counter_increment(
+        socket.assigns.databases,
+        "global-latency-test"
+      )
+      |> Stream.each(&send(parent, {:relay, &1}))
+      |> Stream.run()
+    end)
 
     {:noreply, update(socket, :latency_map, &reset_latency_map(&1, :loading))}
   end

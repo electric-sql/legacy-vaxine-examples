@@ -33,6 +33,10 @@ defmodule AdvancedCounterWeb.RelayIntegration do
         %{"error" => error} = Jason.decode!(body)
         {server, database, {:error, error}}
 
+      {:ok, %Finch.Response{body: body, status: 500}} ->
+        %{"errors" => %{"detail" => error}} = Jason.decode!(body)
+        {server, database, {:error, error}}
+
       {:error, %Mint.TransportError{reason: reason}} ->
         {server, database, {:error, "Network error: #{reason}"}}
     end
