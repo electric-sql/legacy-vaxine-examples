@@ -21,8 +21,8 @@ defmodule AdvancedCounterWeb.RelayIntegration do
     Enum.map(databases, &increment_one_counter(server, &1, id))
   end
 
-  defp increment_one_counter(server, database, id) when database in @database_list do
-    Finch.build(:post, "#{server}/api/increment/#{database}/#{id}")
+  def increment_one_counter(server, database, id) when database in @database_list do
+    Finch.build(:post, "#{server}/api/increment/#{database}/#{id}", [] , "")
     |> Finch.request(Relay)
     |> case do
       {:ok, %Finch.Response{body: body, status: 200}} ->

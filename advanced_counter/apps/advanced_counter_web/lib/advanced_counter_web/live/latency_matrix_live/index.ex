@@ -3,7 +3,11 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.Index do
   alias AdvancedCounterWeb.RelayIntegration
 
   @databases ["cloudsql", "cockroach"]
-  @servers ["http://localhost:4001", "http://localhost:4002"]
+  @servers [
+    "https://advanced-counter-demo--europe-west2-dgdu2db37q-nw.a.run.app",
+    "https://advanced-counter-demo--us-central1-dgdu2db37q-uc.a.run.app",
+    "https://advanced-counter-demo--asia-northeast1-dgdu2db37q-an.a.run.app"
+  ]
 
   def mount(_params, _session, socket) do
     latency_map = Map.new(@servers, &{&1, Map.new(@databases, fn db -> {db, nil} end)})
