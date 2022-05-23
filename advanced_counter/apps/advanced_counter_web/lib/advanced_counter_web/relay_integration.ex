@@ -7,7 +7,7 @@ defmodule AdvancedCounterWeb.RelayIntegration do
 
     Task.async_stream(pairs, fn {server, db} -> increment_one_counter(server, db, id) end,
       max_concurrency: length(pairs),
-      ordered: false,
+      ordered: true,
       on_timeout: :kill_task
     )
     |> Stream.zip(pairs)
