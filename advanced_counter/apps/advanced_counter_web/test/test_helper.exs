@@ -1,2 +1,2 @@
 ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(AdvancedCounter.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(AdvancedCounter.Repos.CloudSql, :manual)
