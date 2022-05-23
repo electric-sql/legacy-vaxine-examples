@@ -1,0 +1,23 @@
+agent:
+  docker: true
+  gcp: true
+
+env:
+  IMAGE_NAME: advanced_counter
+
+steps:
+  - label: ":wrench: Set common metadata"
+    command:
+      - "SHORTSHA=$(echo $BUILDKITE_COMMIT | head -c 7)"
+      - "buildkite-agent meta-data set image_tag $$SHORTSHA"
+      - "buildkite-agent meta-data set demo_name advanced_counter"
+  - wait
+  - label: ":whale: Build & push the relay docker container"
+    command:
+      - "SHORTSHA=$(buildkite-agent meta-data get image_tag)"
+      - "cd basic_counter && docker build --build-arg TARGET_APP=advanced_counter_relay -t ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:latest -t ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:$$SHORTSHA ."
+      - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:$$SHORTSHA"
+      - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:latest"
+  - wait
+  - label: "Prepare Deploy Trigger"
+    command: ".buildkite/trigger_deploy.sh"
