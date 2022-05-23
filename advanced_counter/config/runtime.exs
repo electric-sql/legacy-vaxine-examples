@@ -7,28 +7,58 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 if config_env() == :prod do
-  cloudsql_database_url =
-    System.get_env("CLOUDSQL_DATABASE_URL") ||
-      raise """
-      environment variable CLOUDSQL_DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
-      """
+
+  # Configure CloudSQL
+  hostname = System.get_env("CLOUDSQL_DB_HOST")
+  socket_dir = System.get_env("CLOUDSQL_DB_SOCKET_DIR")
+  socket = System.get_env("CLOUDSQL_DB_SOCKET")
+
+  if !(hostname || socket_dir || socket),
+    do:
+      raise("""
+      Please specify at least one environment variable to connect to the database:
+        - use `CLOUDSQL_DB_HOST` to connect to the server hostname
+        - use `CLOUDSQL_DB_SOCKET_DIR` to connect via a unix socket derived from the port
+        - use `CLOUDSQL_DB_SOCKET` to connect via a unix socket in the given path
+      """)
 
   config :advanced_counter, AdvancedCounter.Repos.CloudSql,
-    # ssl: true,
-    url: cloudsql_database_url,
+    username: System.get_env("CLOUDSQL_DB_USER") || "postgres",
+    password: System.get_env("CLOUDSQL_DB_PASS"),
+    port: String.to_integer(System.get_env("CLOUDSQL_DB_PORT") || "5432"),
+    database:
+      System.get_env("CLOUDSQL_DB_NAME") ||
+        raise("Please specify a database with DB_NAME environment variable"),
+    hostname: System.get_env("CLOUDSQL_DB_HOST"),
+    socket_dir: System.get_env("CLOUDSQL_DB_SOCKET_DIR"),
+    socket: System.get_env("CLOUDSQL_DB_SOCKET"),
     pool_size: String.to_integer(System.get_env("CLOUDSQL_POOL_SIZE") || "10")
 
-  cockroach_database_url =
-    System.get_env("COCKROACH_DATABASE_URL") ||
-      raise """
-      environment variable COCKROACH_DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
-      """
+  # Configure CockroachDB
+  hostname = System.get_env("COCKROACH_DB_HOST")
+  socket_dir = System.get_env("COCKROACH_DB_SOCKET_DIR")
+  socket = System.get_env("COCKROACH_DB_SOCKET")
+
+  if !(hostname || socket_dir || socket),
+    do:
+      raise("""
+      Please specify at least one environment variable to connect to the database:
+        - use `COCKROACH_DB_HOST` to connect to the server hostname
+        - use `COCKROACH_DB_SOCKET_DIR` to connect via a unix socket derived from the port
+        - use `COCKROACH_DB_SOCKET` to connect via a unix socket in the given path
+      """)
 
   config :advanced_counter, AdvancedCounter.Repos.Cockroach,
-    # ssl: true,
-    url: cockroach_database_url,
+    ssl: true,
+    username: System.get_env("COCKROACH_DB_USER") || "postgres",
+    password: System.get_env("COCKROACH_DB_PASS"),
+    port: String.to_integer(System.get_env("COCKROACH_DB_PORT") || "5432"),
+    database:
+      System.get_env("COCKROACH_DB_NAME") ||
+        raise("Please specify a database with DB_NAME environment variable"),
+    hostname: System.get_env("COCKROACH_DB_HOST"),
+    socket_dir: System.get_env("COCKROACH_DB_SOCKET_DIR"),
+    socket: System.get_env("COCKROACH_DB_SOCKET"),
     pool_size: String.to_integer(System.get_env("COCKROACH_POOL_SIZE") || "10")
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
@@ -48,7 +78,7 @@ if config_env() == :prod do
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: String.to_integer(System.get_env("PORT") || System.get_env("RELAY_PORT") || "4000")
+      port: String.to_integer(System.get_env("RELAY_PORT") || System.get_env("PORT") || "4000")
     ],
     secret_key_base: secret_key_base
 
@@ -61,13 +91,8 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
-  # ## Using releases
-  #
-  # If you are doing OTP releases, you need to instruct Phoenix
-  # to start each relevant endpoint:
-  #
-  #     config :advanced_counter_web, AdvancedCounterWeb.Endpoint, server: true
-  #
-  # Then you can assemble a release by calling `mix release`.
-  # See `mix help release` for more information.
+  if System.get_env("PHX_SERVER") do
+    config :advanced_counter_relay, AdvancedCounterRelay.Endpoint, server: true
+    config :advanced_counter_web, AdvancedCounterWeb.Endpoint, server: true
+  end
 end

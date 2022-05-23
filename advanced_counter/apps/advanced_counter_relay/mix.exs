@@ -24,7 +24,7 @@ defmodule AdvancedCounterRelay.MixProject do
   def application do
     [
       mod: {AdvancedCounterRelay.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ssl]
     ]
   end
 
@@ -53,7 +53,8 @@ defmodule AdvancedCounterRelay.MixProject do
   defp aliases do
     [
       setup: ["deps.get"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "assets.deploy": []
     ]
   end
 end
