@@ -27,6 +27,15 @@ config :advanced_counter, AdvancedCounter.Repos.CloudSql,
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
+config :advanced_counter, AdvancedCounter.Repos.Cockroach,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "advanced_counter_cockroach_test#{System.get_env("MIX_TEST_PARTITION")}",
+  pool: Ecto.Adapters.SQL.Sandbox,
+  pool_size: 10
+
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 

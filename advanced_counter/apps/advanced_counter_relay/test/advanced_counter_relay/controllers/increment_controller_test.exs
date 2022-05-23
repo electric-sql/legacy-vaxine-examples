@@ -10,16 +10,33 @@ defmodule AdvancedCounterRelay.IncrementControllerTest do
            }
   end
 
-  test "should increment the counter for the DB and return the timing", %{conn: conn} do
-    conn = post(conn, Routes.increment_path(conn, :increment, "cloudsql", "1"))
+  describe "CloudSQL" do
+    test "should increment the counter for the DB and return the timing", %{conn: conn} do
+      conn = post(conn, Routes.increment_path(conn, :increment, "cloudsql", "1"))
 
-    assert %{
-             "status" => "ok",
-             "database" => "cloudsql",
-             "write_latency" => latency
-           } = json_response(conn, 200)
+      assert %{
+               "status" => "ok",
+               "database" => "cloudsql",
+               "write_latency" => latency
+             } = json_response(conn, 200)
 
-    assert latency > 0
-    assert latency < 100
+      assert latency > 0
+      assert latency < 100
+    end
+  end
+
+  describe "CockroachDB" do
+    test "should increment the counter for the DB and return the timing", %{conn: conn} do
+      conn = post(conn, Routes.increment_path(conn, :increment, "cockroach", "1"))
+
+      assert %{
+               "status" => "ok",
+               "database" => "cockroach",
+               "write_latency" => latency
+             } = json_response(conn, 200)
+
+      assert latency > 0
+      assert latency < 100
+    end
   end
 end

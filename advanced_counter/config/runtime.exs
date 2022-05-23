@@ -19,6 +19,18 @@ if config_env() == :prod do
     url: cloudsql_database_url,
     pool_size: String.to_integer(System.get_env("CLOUDSQL_POOL_SIZE") || "10")
 
+  cockroach_database_url =
+    System.get_env("COCKROACH_DATABASE_URL") ||
+      raise """
+      environment variable COCKROACH_DATABASE_URL is missing.
+      For example: ecto://USER:PASS@HOST/DATABASE
+      """
+
+  config :advanced_counter, AdvancedCounter.Repos.Cockroach,
+    # ssl: true,
+    url: cockroach_database_url,
+    pool_size: String.to_integer(System.get_env("COCKROACH_POOL_SIZE") || "10")
+
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want
