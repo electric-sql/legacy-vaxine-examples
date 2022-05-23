@@ -19,6 +19,11 @@ config :advanced_counter, AdvancedCounter.Repos.Cockroach,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :advanced_counter, AdvancedCounter.Repos.Antidote,
+  address: "localhost",
+  port: 8087,
+  log: true
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -48,7 +53,6 @@ config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
   debug_errors: true,
   secret_key_base: "RbiM1yKXsiAKRg+1NfY5UqimhL8/z5awOl7nRLVINMTNN6qO2Bw2b59tTpByPNdH",
   watchers: []
-
 
 # Watch static and templates for browser reloading.
 config :advanced_counter_web, AdvancedCounterWeb.Endpoint,

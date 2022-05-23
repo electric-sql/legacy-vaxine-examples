@@ -35,6 +35,9 @@ config :advanced_counter, AdvancedCounter.Repos.Cockroach,
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
+config :advanced_counter, AdvancedCounter.Repos.Antidote,
+  address: "localhost",
+  port: 8087
 
 # Print only warnings and errors during test
 config :logger, level: :warn
