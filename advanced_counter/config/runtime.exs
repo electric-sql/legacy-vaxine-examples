@@ -7,6 +7,13 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 if config_env() == :prod do
+  # Configure Antidote
+
+  config :advanced_counter, AdvancedCounter.Repos.Antidote,
+    address:
+      System.get_env("ANTIDOTE_DB_HOST") ||
+        raise("Please specify `ANTIDOTE_DB_HOST` environment variable to connect to the database"),
+    port: String.to_integer(System.get_env("ANTIDOTE_DB_PORT") || "8087")
 
   # Configure CloudSQL
   hostname = System.get_env("CLOUDSQL_DB_HOST")
