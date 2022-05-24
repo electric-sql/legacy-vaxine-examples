@@ -11,9 +11,10 @@ defmodule AdvancedCounterWeb.Application do
       # Start the Telemetry supervisor
       AdvancedCounterWeb.Telemetry,
       # Start the Endpoint (http/https)
-      AdvancedCounterWeb.Endpoint
+      AdvancedCounterWeb.Endpoint,
       # Start a worker by calling: AdvancedCounterWeb.Worker.start_link(arg)
       # {AdvancedCounterWeb.Worker, arg}
+      {Finch, name: Relay}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

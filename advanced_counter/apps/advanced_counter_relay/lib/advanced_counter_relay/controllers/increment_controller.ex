@@ -18,9 +18,14 @@ defmodule AdvancedCounterRelay.IncrementController do
         """)
 
         conn
-        |> put_status(500)
+        |> put_status(503)
         |> json(%{status: :error, database: db, error: "Couldn't increment the counter"})
     end
+  rescue
+    _ ->
+      conn
+      |> put_status(503)
+      |> json(%{status: :error, database: db, error: "Couldn't connect to the database"})
   end
 
   def increment(conn, _) do
