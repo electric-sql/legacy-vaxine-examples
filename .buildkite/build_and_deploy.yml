@@ -6,6 +6,7 @@ agents:
 
 steps:
   - label: ":railway_track: Choosing child pipelines"
+    if: build.source != 'ui'
     plugins:
       - chronotc/monorepo-diff#v2.2.0:
           diff: "git diff --name-only HEAD~1"
@@ -20,3 +21,20 @@ steps:
                 group: ":rocket: Advanced counter example"
                 label: ":pipeline: Building advanced_counter"
                 command: buildkite-agent pipeline upload advanced_counter/.buildkite/build_and_deploy.yml
+  - label: ":railway_track: Select which demo to build"
+    if: build.source == 'ui'
+    input: "Build & deploy a demo"
+    key: "demo-select"
+    fields:
+      - select: "Demo"
+        key: "demo-name"
+        required: true
+        options:
+          - label: "Basic counter"
+            value: "basic_counter"
+          - label: "Advanced counter"
+            value: "advanced_counter"
+  - label: ":pipeline: Building selected demo"
+    if: build.source == 'ui'
+    depends_on: ["demo-select"]
+    command: buildkite-agent pipeline upload $(buildkite-agent meta-data get demo-name)/.buildkite/build_and_deploy.yml
