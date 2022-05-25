@@ -56,7 +56,6 @@ COPY config/config.exs config/${MIX_ENV}.exs config/
 RUN mix deps.compile
 
 COPY apps/advanced_counter/priv apps/advanced_counter/priv
-COPY apps/advanced_counter_relay/priv apps/advanced_counter_relay/priv
 COPY apps/advanced_counter_web/priv apps/advanced_counter_web/priv
 
 COPY apps/advanced_counter/lib apps/advanced_counter/lib
