@@ -15,7 +15,7 @@ steps:
   - label: ":whale: Build & push the relay docker container"
     command:
       - "SHORTSHA=$(buildkite-agent meta-data get image_tag)"
-      - "cd basic_counter && docker build --build-arg TARGET_APP=advanced_counter_relay -t ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:latest -t ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:$$SHORTSHA ."
+      - "cd advanced_counter && docker build --build-arg TARGET_APP=advanced_counter_relay -t ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:latest -t ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:$$SHORTSHA ."
       - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:$$SHORTSHA"
       - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:latest"
   - wait
