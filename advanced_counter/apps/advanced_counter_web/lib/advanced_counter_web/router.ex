@@ -17,11 +17,6 @@ defmodule AdvancedCounterWeb.Router do
   scope "/", AdvancedCounterWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", LatencyMatrixLive.Index, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", AdvancedCounterWeb do
-  #   pipe_through :api
-  # end
 end

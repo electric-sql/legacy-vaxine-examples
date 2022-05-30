@@ -43,3 +43,9 @@
       leading-snug prose-p:my-4
   }
 }
+
+@layer base {
+  svg.boxed-transforms * {
+    transform-box: fill-box
+  }
+}
