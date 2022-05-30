@@ -10,6 +10,8 @@ defmodule AdvancedCounterWeb.Application do
     children = [
       # Start the Telemetry supervisor
       AdvancedCounterWeb.Telemetry,
+      # Start the pubsub
+      {Phoenix.PubSub, name: AdvancedCounterWeb.PubSub},
       # Start the Endpoint (http/https)
       AdvancedCounterWeb.Endpoint,
       # Start a worker by calling: AdvancedCounterWeb.Worker.start_link(arg)
