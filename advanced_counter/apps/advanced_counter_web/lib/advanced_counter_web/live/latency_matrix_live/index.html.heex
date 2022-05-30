@@ -42,7 +42,12 @@
         <% x when x not in [:ready, :complete] -> %>
           <.progress_steps current_step={@ui_state} animations={@animations} />
         <% :complete -> %>
-          <.results relays={@relays} databases={@databases} latency_map={@latency_map} />
+          <.results
+            relays={@relays}
+            databases={@databases}
+            latency_map={@latency_map}
+            database_data={@database_data}
+          />
         <% _ -> %>
       <% end %>
     </div>

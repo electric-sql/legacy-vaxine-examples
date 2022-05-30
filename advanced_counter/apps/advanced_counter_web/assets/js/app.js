@@ -28,14 +28,14 @@ Hooks.TriggerAnimation = {
     return this.el.dataset.startPhase;
   },
   delay() {
-    return parseFloat(this.el.dataset.delay || "0ms")
+    return parseFloat(this.el.dataset.delay || "0ms");
   },
   mounted() {
-    this.trigger = 'start-animation-step';
+    this.trigger = "start-animation-step";
     this.phase = this.startPhase();
     this.listener = this.handleEvent(this.trigger, ({ step }) => {
       if (step == this.phase) {
-        console.log(this.delay())
+        console.log(this.delay());
         setTimeout(() => this.el.beginElement(), this.delay());
       }
     });
@@ -56,7 +56,28 @@ Hooks.LoadingIndicator = {
     clearInterval(this.interval);
   },
 };
+Hooks.WithTooltip = {
+  mounted() {
+    this.tooltip = document.getElementById(
+      this.el.getAttribute("aria-describedby")
+    );
 
+    const showEvents = ["mouseenter", "focus"];
+    const hideEvents = ["mouseleave", "blur"];
+
+    showEvents.forEach((e) =>
+      this.el.addEventListener(e, () =>
+        this.tooltip.classList.toggle("hidden", false)
+      )
+    );
+
+    hideEvents.forEach((e) =>
+      this.el.addEventListener(e, () =>
+        this.tooltip.classList.toggle("hidden", true)
+      )
+    );
+  }
+};
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")

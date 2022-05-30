@@ -4,7 +4,32 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.Index do
   import AdvancedCounterWeb.LatencyMatrixLive.Map
   import AdvancedCounterWeb.LatencyMatrixLive.ResultComponents
 
-  @databases ["cloudsql", "cockroach", "antidote"]
+  @databases ["cloudsql", "antidote", "cockroach"]
+
+  @database_data %{
+    "antidote" => %{
+      name: "Vaxine DB",
+      information: """
+      We're running a single node in each region. Conflict-free replicated
+      data types guarantee that we can accept writes and still arrive at a consistent state
+      without a "main" server.
+      """
+    },
+    "cloudsql" => %{
+      name: "Hosted PostgreSQL",
+      information: """
+      We're using Google Cloud SQL version of hosted PostgreSQL to provide comparison to how a lot
+      of companies are usually dealing with their data. Write server is in europe-west2.
+      """
+    },
+    "cockroach" => %{
+      name: "Cockroach DB",
+      information: """
+      We're running a multi-region CockroachDB cluster without regional table localities. There is a node
+      set up in each region.
+      """
+    }
+  }
 
   @animation_steps [:distribution, :preparation, :execution, :collection, :completion]
 
@@ -36,6 +61,7 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.Index do
       |> assign(:animations, @animations)
       |> assign(:relays, relays)
       |> assign(:databases, @databases)
+      |> assign(:database_data, @database_data)
 
     {:ok, socket}
   end
