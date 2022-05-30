@@ -1,5 +1,12 @@
 import Config
 
+config :advanced_counter_web,
+  relay_list:
+    System.get_env("RELAY_LIST", "")
+    |> String.split(",", trim: true)
+    |> Enum.map(&String.split(&1, "=", parts: 2))
+    |> Enum.map(&List.to_tuple/1)
+
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
 # system starts, so it is typically used to load production configuration
