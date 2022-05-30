@@ -1,5 +1,5 @@
 defmodule AdvancedCounterWeb.RelayIntegration do
-  @database_list ["cloudsql", "cockroach"]
+  @database_list ["cloudsql", "cockroach", "antidote"]
 
   @spec stream_counter_increment(list(String.t()), list(String.t()), String.t()) :: Enumerable.t()
   def stream_counter_increment(servers, databases \\ @database_list, id) do
@@ -21,8 +21,8 @@ defmodule AdvancedCounterWeb.RelayIntegration do
     Enum.map(databases, &increment_one_counter(server, &1, id))
   end
 
-  defp increment_one_counter(server, database, id) when database in @database_list do
-    Finch.build(:post, "#{server}/api/increment/#{database}/#{id}")
+  def increment_one_counter(server, database, id) when database in @database_list do
+    Finch.build(:post, "#{server}/api/increment/#{database}/#{id}", [], "")
     |> Finch.request(Relay)
     |> case do
       {:ok, %Finch.Response{body: body, status: 200}} ->
@@ -31,6 +31,10 @@ defmodule AdvancedCounterWeb.RelayIntegration do
 
       {:ok, %Finch.Response{body: body, status: 503}} ->
         %{"error" => error} = Jason.decode!(body)
+        {server, database, {:error, error}}
+
+      {:ok, %Finch.Response{body: body, status: 500}} ->
+        %{"errors" => %{"detail" => error}} = Jason.decode!(body)
         {server, database, {:error, error}}
 
       {:error, %Mint.TransportError{reason: reason}} ->
