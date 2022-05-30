@@ -1,0 +1,50 @@
+<div class="mt-8 max-w-4xl mx-auto">
+  <h1 class="font-poppins text-3xl mt-10 mb-3">
+    Advanced Counter
+  </h1>
+  <div class="vaxine-prose text-blackish dark:text-blackish-invert w-full">
+    <p>
+      Click the button to increment a counter in <%= length(@databases) %>
+      different databases from backends spread across <%= map_size(@relays) %>
+      regions. It will then show the write latency from each backend to the closest database node.
+    </p>
+  </div>
+  <button
+    class="bg-accent hover:bg-accent-light dark:bg-accent-dark dark:hover:bg-accent transition-colors p-2 px-10 mt-3 w-auto text-accent-foreground font-bold rounded disabled:bg-slate-300"
+    phx-click="test-latency"
+    disabled={@state not in [:ready, :complete]}
+  >
+    <%= if @state in [:ready, :complete] do %>
+      Test global write path latency
+    <% else %>
+      Testing write path latency...
+    <% end %>
+  </button>
+
+  <div class="relative">
+    <.map_with_locations
+      relays={@relays}
+      state={@state}
+      latency_map={@latency_map}
+      databases={@databases}
+      animations={@animations}
+      animation_latency_map={@animation_latency_map}
+      class={
+        "#{if @state == :complete, do: "scale-90"} transition-transform origin-top duration-300"
+      }
+    />
+    <div class={
+      "my-4 bg-white p-4 rounded shadow dark:bg-blackish absolute transition-all duration-300 w-full
+          #{if @state == :complete, do: "top-10", else: "top-full"}
+          #{if @state == :ready, do: "invisible opacity-0", else: "visible opacity-100"}"
+    }>
+      <%= case @state do %>
+        <% x when x not in [:ready, :complete] -> %>
+          <.progress_steps current_step={@ui_state} animations={@animations} />
+        <% :complete -> %>
+          <.results relays={@relays} databases={@databases} latency_map={@latency_map} />
+        <% _ -> %>
+      <% end %>
+    </div>
+  </div>
+</div>

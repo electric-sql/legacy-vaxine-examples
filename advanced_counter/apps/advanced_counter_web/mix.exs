@@ -47,7 +47,6 @@ defmodule AdvancedCounterWeb.MixProject do
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:advanced_counter, in_umbrella: true},
       {:jason, "~> 1.2"},
       {:finch, "~> 0.12"},
       {:plug_cowboy, "~> 2.5"}

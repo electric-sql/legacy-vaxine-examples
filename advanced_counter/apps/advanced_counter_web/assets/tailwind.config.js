@@ -11,7 +11,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'sans': ['Averta', 'HelveticaNeue', ...defaultTheme.fontFamily.sans],
-        'poppins': ['Poppins', 'HelveticaNeue', ...defaultTheme.fontFamily.sans]
+        'poppins': ['Poppins', 'HelveticaNeue', ...defaultTheme.fontFamily.sans],
+        'iosevka': ['Iosevka Web']
       },
       colors: {
         'primary': '#2d3343',
