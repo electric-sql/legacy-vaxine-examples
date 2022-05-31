@@ -40,12 +40,20 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.ResultComponents do
       <% end %>
     </table>
 
-    <div class="mt-4">
-      <%= for %{name: name, information: info} <- Map.values(@database_data) do %>
-        <div class="mt-2">
-          <span class="font-bold"><%= name %>:</span>
-          <p><%= info %></p>
-        </div>
+    <div class="mt-4 vaxine-prose max-w-full">
+      <h2>What exactly are we comparing</h2>
+      <p>
+        This example application sends write operations (counter increments) from <%= map_size(@relays) %> geo-distributed
+        regions to <%= length(@databases) %> different databases. Below we explain how these databases are set up
+        and what the experiments are demonstrating.
+      </p>
+      <%= for db <- @databases, %{name: name, information: info} = @database_data[db] do %>
+        <section>
+          <h3><%= name %>:</h3>
+          <%= for info_p <- List.wrap(info) do %>
+          <p><%= raw(info_p) %></p>
+          <% end %>
+        </section>
       <% end %>
     </div>
     """

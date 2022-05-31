@@ -4,30 +4,51 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.Index do
   import AdvancedCounterWeb.LatencyMatrixLive.Map
   import AdvancedCounterWeb.LatencyMatrixLive.ResultComponents
 
-  @databases ["cloudsql", "antidote", "cockroach"]
+  @databases ["cloudsql", "cockroach", "antidote"]
 
   @database_data %{
-    "antidote" => %{
-      name: "Vaxine DB",
-      information: """
-      We're running a single node in each region. Conflict-free replicated
-      data types guarantee that we can accept writes and still arrive at a consistent state
-      without a "main" server.
-      """
-    },
     "cloudsql" => %{
-      name: "Hosted PostgreSQL",
+      name: "Postgres",
       information: """
-      We're using Google Cloud SQL version of hosted PostgreSQL to provide comparison to how a lot
-      of companies are usually dealing with their data. Write server is in europe-west2.
+      The write operations are sent to a single <a href="https://www.postgresql.org/">PostgreSQL</a> database server,
+      hosted by the <a href="https://cloud.google.com/sql">Google Cloud SQL</a> service in the <code>europe-west2</code> region.
+      As you can see, writes from nearby regions have relatively low latency,
+      whilst writes from far away regions have higher latency, in line with the geographical distance separating them.
       """
     },
     "cockroach" => %{
       name: "Cockroach DB",
-      information: """
-      We're running a multi-region CockroachDB cluster without regional table localities. There is a node
-      set up in each region.
-      """
+      information: [
+        """
+        This is a multi-region <a href="https://www.cockroachlabs.com/">CockroachDB</a> cluster with a single database server
+        in each geo-distributed region.
+        Cockroach is an active-active distributed database that uses consensus to maintain strong consistency.
+        We're running Cockroach in its default mode, without any geo-fencing or regional table localities.
+        """,
+        """
+        The write operations are sent to the nearest Cockroach node. This then initiates the consensus protocol,
+        which issues at-least two network requests, to at-least a quorum of the other nodes spread out across the world.
+        As a result, writes incur very high write-path response time.
+        """
+      ]
+    },
+    "antidote" => %{
+      name: "Vaxine DB",
+      information: [
+        """
+        This is a multi-region <a href="https://vaxine.io">Vaxine</a> cluster with a single database server
+        in each geo-distributed region. Vaxine is an active-active distributed database that implements
+        <a href="https://vaxine.io/tech/how-it-works#tcc">transactional causal+ consistency</a> without requiring
+        consensus or coordination between regions.
+        """,
+        """
+        The write operations are sent to the nearest Vaxine node. This validates and stores the data without initiating
+        any network requests to other regions. As a result, writes incur minimal latency.
+        """,
+        """
+        For more information, see <a href="https://vaxine.io/tech/how-it-works">how Vaxine works here</a>.
+        """
+      ]
     }
   }
 
