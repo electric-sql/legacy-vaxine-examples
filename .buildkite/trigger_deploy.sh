@@ -12,8 +12,8 @@ PIPELINE="steps:
     label: \"Trigger deploy\"
     build:
       meta_data:
-        demo-name: $DEMO_NAME
-        demo-image-tag: $DEMO_IMAGE_TAG
+        demo-name: "$DEMO_NAME"
+        demo-image-tag: "$DEMO_IMAGE_TAG"
 "
 
 # Upload the new pipeline and add it to the current build

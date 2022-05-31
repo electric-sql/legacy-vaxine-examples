@@ -9,7 +9,7 @@ steps:
   - label: ":wrench: Set common metadata"
     command:
       - "SHORTSHA=$(echo $BUILDKITE_COMMIT | head -c 7)"
-      - "buildkite-agent meta-data set image_tag $$SHORTSHA"
+      - buildkite-agent meta-data set image_tag "$$SHORTSHA"
       - "buildkite-agent meta-data set demo_name advanced_counter"
   - wait
   - label: ":whale: Build & push the relay docker container"
