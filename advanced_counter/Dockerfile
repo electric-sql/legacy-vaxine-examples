@@ -66,7 +66,6 @@ COPY apps/advanced_counter_web/assets apps/advanced_counter_web/assets
 
 # compile assets
 WORKDIR /app/apps/${TARGET_APP}/
-RUN pwd && ls -lA && echo "${TARGET_APP}1"
 RUN mix assets.deploy
 
 # Compile the release
