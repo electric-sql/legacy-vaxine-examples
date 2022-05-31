@@ -43,15 +43,18 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.ResultComponents do
     <div class="mt-4 vaxine-prose max-w-full">
       <h2>What exactly are we comparing</h2>
       <p>
-        This example application sends write operations (counter increments) from <%= map_size(@relays) %> geo-distributed
-        regions to <%= length(@databases) %> different databases. Below we explain how these databases are set up
+        This example application sends write operations (counter increments) from
+        <%= map_size(@relays) %>
+        geo-distributed
+        regions to <%= length(@databases) %>
+        different databases. Below we explain how these databases are set up
         and what the experiments are demonstrating.
       </p>
       <%= for db <- @databases, %{name: name, information: info} = @database_data[db] do %>
         <section>
           <h3><%= name %>:</h3>
           <%= for info_p <- List.wrap(info) do %>
-          <p><%= raw(info_p) %></p>
+            <p><%= raw(info_p) %></p>
           <% end %>
         </section>
       <% end %>
