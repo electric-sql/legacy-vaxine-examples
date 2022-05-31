@@ -17,7 +17,7 @@ if config_env() == :prod do
   # Configure Antidote
 
   config :advanced_counter, AdvancedCounter.Repos.Antidote,
-    address:
+    hostname:
       System.get_env("ANTIDOTE_DB_HOST") ||
         raise("Please specify `ANTIDOTE_DB_HOST` environment variable to connect to the database"),
     port: String.to_integer(System.get_env("ANTIDOTE_DB_PORT") || "8087")

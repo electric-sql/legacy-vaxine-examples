@@ -1,19 +1,12 @@
-# AdvancedCounterRelay
+# Advanced counter relay
 
-To start your Phoenix server:
+To start the server:
 
   * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
+  * Make sure you have Postgres running locally at port 5432 and Antidote at port 8081
+  * Initialize databases using `mix ecto.create && mix ecto.migrate`
   * Start Phoenix endpoint with `mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can access [`localhost:4001`](http://localhost:4001) with cURL or another HTTP client.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+Check the README at the umbrella root for more details.

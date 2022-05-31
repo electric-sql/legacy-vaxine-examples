@@ -1,3 +1,3 @@
-# AdvancedCounter
+# Advanced counter DB access
 
-**TODO: Add description**
+This application isn't meant to be used on it's own, please check the README at the umbrella root
