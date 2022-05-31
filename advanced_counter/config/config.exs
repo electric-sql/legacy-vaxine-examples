@@ -34,6 +34,16 @@ config :advanced_counter_web, AdvancedCounterWeb.Endpoint,
   pubsub_server: AdvancedCounterWeb.PubSub,
   live_view: [signing_salt: "Muhf25ML"]
 
+config :advanced_counter_web, AdvancedCounterWeb.Plugs.ContentSecurityPolicy,
+  frame_ancestors: [
+    "'self'",
+    "http://localhost:*",
+    "vaxine-io.netlify.app",
+    "*.netlify.app",
+    "vaxine.io",
+    "*.vaxine.io"
+  ]
+
 # Configures the endpoint
 config :advanced_counter_relay, AdvancedCounterRelay.Endpoint,
   url: [host: "localhost"],
