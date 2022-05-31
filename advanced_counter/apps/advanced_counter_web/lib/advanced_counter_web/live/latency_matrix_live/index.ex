@@ -17,7 +17,7 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.Index do
       """
     },
     "cockroach" => %{
-      name: "Cockroach DB",
+      name: "Cockroach",
       information: [
         """
         This is a multi-region <a href="https://www.cockroachlabs.com/">CockroachDB</a> cluster with a single database server
@@ -33,7 +33,7 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.Index do
       ]
     },
     "antidote" => %{
-      name: "Vaxine DB",
+      name: "Vaxine",
       information: [
         """
         This is a multi-region <a href="https://vaxine.io">Vaxine</a> cluster with a single database server
