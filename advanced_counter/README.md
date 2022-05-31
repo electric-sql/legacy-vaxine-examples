@@ -14,7 +14,7 @@ Web application does not depend on the databases to be ran, instead requiring a 
    `mix deps.get`
 2. Set the environment variable describing available relays:
    `export RELAY_LIST="asia-northeast1=https://advanced-counter-demo--asia-northeast1-dgdu2db37q-an.a.run.app,europe-west2=https://advanced-counter-demo--europe-west2-dgdu2db37q-nw.a.run.app,us-central1=https://advanced-counter-demo--us-central1-dgdu2db37q-uc.a.run.app"`
-   The `RELAY_LIST` variable should be formatted as a semicolon-separated list of pairs `region=hostname`. If you're running relays locally, just specify it as any region: `us-central1=http://localhost:4001`
+   The `RELAY_LIST` variable should be formatted as a comma-separated list of pairs `region=hostname`. If you're running relays locally, just specify it as any region: `us-central1=http://localhost:4001`
 3. Run the web application:
    `cd apps/advanced_counter_web && mix phx.server`
    It should be available at http://localhost:4000.
