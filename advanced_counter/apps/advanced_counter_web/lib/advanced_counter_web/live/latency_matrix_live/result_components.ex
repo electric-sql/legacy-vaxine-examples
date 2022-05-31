@@ -24,7 +24,7 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.ResultComponents do
         <% end %>
       </tr>
       <%= for db <- @databases do %>
-        <tr class={if db == "antidote", do: "bg-slate-100"}>
+        <tr class={if db == "antidote", do: "bg-slate-100 dark:bg-whiteish-invert"}>
           <th class="font-normal p-2 pr-4"><%= @database_data[db].name %></th>
           <%= for {server, name} <- @relays do %>
             <td class="p-3 border-l-[1px] border-slate-200 text-center">
@@ -40,7 +40,7 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.ResultComponents do
       <% end %>
     </table>
 
-    <div class="mt-4 vaxine-prose max-w-full">
+    <div class="mt-4 vaxine-prose max-w-full dark:prose-invert">
       <h2>What exactly are we comparing</h2>
       <p>
         This example application sends write operations (counter increments) from
@@ -65,8 +65,8 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.ResultComponents do
   defp latency(assigns) do
     ~H"""
     <span
-      class="inline-block rounded-xl p-1 px-4"
-      style={"background: hsl(#{hue(@deviations)},90%,80%)"}
+      class="inline-block rounded-xl p-1 px-4 bg-[hsl(var(--heatmap-hue),90%,80%)] dark:bg-[hsl(var(--heatmap-hue),50%,60%)] dark:text-blackish"
+      style={"--heatmap-hue: #{hue(@deviations)}"}
     >
       <%= Float.round(@value, 1) %>ms
     </span>
