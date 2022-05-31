@@ -10,7 +10,14 @@ defmodule AdvancedCounter.Umbrella.MixProject do
       aliases: aliases(),
       releases: [
         advanced_counter_relay: [
-          applications: [advanced_counter_relay: :permanent]
+          applications: [advanced_counter_relay: :permanent],
+          runtime_config_path: "config/relay_runtime.exs",
+          overlays: "apps/advanced_counter_relay/rel/overlays"
+        ],
+        advanced_counter_web: [
+          applications: [advanced_counter_web: :permanent],
+          runtime_config_path: "config/web_runtime.exs",
+          overlays: "apps/advanced_counter_web/rel/overlays"
         ]
       ]
     ]

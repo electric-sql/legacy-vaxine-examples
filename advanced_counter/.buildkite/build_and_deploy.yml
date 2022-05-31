@@ -18,6 +18,12 @@ steps:
       - "cd advanced_counter && docker build --build-arg TARGET_APP=advanced_counter_relay -t ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:latest -t ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:$$SHORTSHA ."
       - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:$$SHORTSHA"
       - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}_relay:latest"
+  - label: ":whale: Build & push the web docker container"
+    command:
+      - "SHORTSHA=$(buildkite-agent meta-data get image_tag)"
+      - "cd advanced_counter && docker build --build-arg TARGET_APP=advanced_counter_web -t ${DOCKER_REPO?}/${IMAGE_NAME?}_web:latest -t ${DOCKER_REPO?}/${IMAGE_NAME?}_web:$$SHORTSHA ."
+      - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}_web:$$SHORTSHA"
+      - "docker push ${DOCKER_REPO?}/${IMAGE_NAME?}_web:latest"
   - wait
   - label: "Prepare Deploy Trigger"
     command: ".buildkite/trigger_deploy.sh"

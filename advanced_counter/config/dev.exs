@@ -73,3 +73,10 @@ config :phoenix, :plug_init_mode, :runtime
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
+
+config :advanced_counter_web,
+  relay_list:
+    System.get_env("RELAY_LIST", "")
+    |> String.split(",", trim: true)
+    |> Enum.map(&String.split(&1, "=", parts: 2))
+    |> Enum.map(&List.to_tuple/1)

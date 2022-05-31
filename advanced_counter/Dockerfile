@@ -66,17 +66,19 @@ COPY apps/advanced_counter_web/assets apps/advanced_counter_web/assets
 
 # compile assets
 WORKDIR /app/apps/${TARGET_APP}/
-RUN pwd && ls -lA && echo "${TARGET_APP}1"
 RUN mix assets.deploy
 
 # Compile the release
 RUN mix compile
 
 # Changes to config/runtime.exs don't require recompiling the code
-COPY config/runtime.exs /app/config/
+COPY config/relay_runtime.exs /app/config/
+COPY config/web_runtime.exs /app/config/
 
 COPY apps/${TARGET_APP}/rel rel
-RUN mix release
+
+WORKDIR /app
+RUN mix release ${TARGET_APP}
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
