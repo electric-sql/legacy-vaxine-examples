@@ -1,19 +1,12 @@
-# AdvancedCounterWeb
+# Web interface for advanced counter relays
 
-To start your Phoenix server:
+To start the web interface:
 
   * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
+  * Specify a list of available relays in `RELAY_LIST` environment variable
+    * `RELAY_LIST` format is a semicolon-separated list of pairs `region=hostname`, e.g `us-central1=http://localhost:4001`
   * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+Check the README at the umbrella root for more details.
