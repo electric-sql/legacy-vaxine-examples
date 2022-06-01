@@ -23,6 +23,7 @@ if !(hostname || socket_dir || socket),
     """)
 
 config :advanced_counter, AdvancedCounter.Repos.CloudSql,
+  ssl: System.get_env("CLOUDSQL_DB_SSL", "true") == "true",
   username: System.get_env("CLOUDSQL_DB_USER") || "postgres",
   password: System.get_env("CLOUDSQL_DB_PASS"),
   port: String.to_integer(System.get_env("CLOUDSQL_DB_PORT") || "5432"),
@@ -49,7 +50,7 @@ if !(hostname || socket_dir || socket),
     """)
 
 config :advanced_counter, AdvancedCounter.Repos.Cockroach,
-  ssl: true,
+  ssl: System.get_env("COCKROACH_DB_SSL", "true") == "true",
   username: System.get_env("COCKROACH_DB_USER") || "postgres",
   password: System.get_env("COCKROACH_DB_PASS"),
   port: String.to_integer(System.get_env("COCKROACH_DB_PORT") || "5432"),
