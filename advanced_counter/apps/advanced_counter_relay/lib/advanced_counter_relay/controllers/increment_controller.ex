@@ -22,7 +22,12 @@ defmodule AdvancedCounterRelay.IncrementController do
         |> json(%{status: :error, database: db, error: "Couldn't increment the counter"})
     end
   rescue
-    _ ->
+    e ->
+      Logger.error("""
+      Error while incrementing counter `#{counter_id}` in db #{db}:
+        #{inspect(e)}
+      """)
+
       conn
       |> put_status(503)
       |> json(%{status: :error, database: db, error: "Couldn't connect to the database"})
