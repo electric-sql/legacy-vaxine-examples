@@ -24,27 +24,27 @@ defmodule AdvancedCounter do
   def connection_warmup("cockroach"), do: Ecto.Adapters.SQL.query(Cockroach, "SELECT 1")
   def connection_warmup("antidote"), do: {:ok, nil}
 
-  def increment(db, counter_id)
+  def increment(db, counter_id, retries \\ 3)
 
-  def increment("cloudsql", counter_id),
+  def increment("cloudsql", counter_id, _),
     do: CloudSql.transaction(postgres_increment_multi(counter_id))
 
-  def increment("cockroach", counter_id) do
+  def increment("cockroach", counter_id, retries) do
     Cockroach.transaction(postgres_increment_multi(counter_id))
   rescue
     e in Postgrex.Error ->
-      case e.postgres do
-        %{code: :serialization_failure} ->
+      case {e.postgres, retries} do
+        {%{code: :serialization_failure}, x} when x > 0 ->
           # Retry the operation per the Cockroach docs
           # https://www.cockroachlabs.com/docs/v22.1/transactions#client-side-intervention
-          increment("cockroach", counter_id)
+          increment("cockroach", counter_id, retries - 1)
         _ ->
           # Unknown error, we should reraise that
           reraise e, __STACKTRACE__
       end
   end
 
-  def increment("antidote", counter_id),
+  def increment("antidote", counter_id, _),
     do: %VaxCounter{id: counter_id, value: 0} |> VaxCounter.increment() |> Antidote.update()
 
   defp postgres_increment_multi(counter_id) do
