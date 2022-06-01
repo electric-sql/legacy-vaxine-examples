@@ -25,8 +25,20 @@ defmodule AdvancedCounter do
   def increment("cloudsql", counter_id),
     do: CloudSql.transaction(postgres_increment_multi(counter_id))
 
-  def increment("cockroach", counter_id),
-    do: Cockroach.transaction(postgres_increment_multi(counter_id))
+  def increment("cockroach", counter_id) do
+    Cockroach.transaction(postgres_increment_multi(counter_id))
+  rescue
+    e in Postgrex.Error ->
+      case e.postgres do
+        %{code: :serialization_failure} ->
+          # Retry the operation per the Cockroach docs
+          # https://www.cockroachlabs.com/docs/v22.1/transactions#client-side-intervention
+          increment("cockroach", counter_id)
+        _ ->
+          # Unknown error, we should reraise that
+          reraise e, __STACKTRACE__
+      end
+  end
 
   def increment("antidote", counter_id),
     do: %VaxCounter{id: counter_id, value: 0} |> VaxCounter.increment() |> Antidote.update()
