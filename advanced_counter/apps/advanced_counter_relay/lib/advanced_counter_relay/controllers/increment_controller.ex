@@ -7,6 +7,9 @@ defmodule AdvancedCounterRelay.IncrementController do
   @spec increment(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def increment(conn, %{"database" => db, "counter_id" => counter_id})
       when db in @acceptable_dbs do
+
+    {:ok, _} = AdvancedCounter.connection_warmup(db)
+
     case :timer.tc(&AdvancedCounter.increment/2, [db, counter_id]) do
       {latency, {:ok, _}} ->
         json(conn, %{status: :ok, database: db, write_latency: latency / 1000})
