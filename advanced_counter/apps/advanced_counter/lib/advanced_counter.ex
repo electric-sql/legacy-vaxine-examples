@@ -20,6 +20,10 @@ defmodule AdvancedCounter do
   def get("cockroach", counter_id), do: Cockroach.one(Counter, counter_id)
   def get("antidote", counter_id), do: Antidote.one(Counter, counter_id)
 
+  def connection_warmup("cloudsql"), do: Ecto.Adapters.SQL.query(CloudSql, "SELECT 1")
+  def connection_warmup("cockroach"), do: Ecto.Adapters.SQL.query(Cockroach, "SELECT 1")
+  def connection_warmup("antidote"), do: {:ok, nil}
+
   def increment(db, counter_id)
 
   def increment("cloudsql", counter_id),
