@@ -39,7 +39,17 @@ defmodule AdvancedCounter.MixProject do
       {:phoenix_pubsub, "~> 2.0"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
-      {:vax, git: "https://github.com/vaxine-io/vax.git"},
+      {:vax, git: "https://github.com/vaxine-io/vaxine.git", branch: "main", sparse: "apps/vax"},
+      {:antidote_pb_codec,
+       git: "git@github.com:vaxine-io/vaxine.git",
+       branch: "main",
+       sparse: "apps/antidote_pb_codec",
+       override: true},
+      {:antidotec_pb,
+       git: "git@github.com:vaxine-io/vaxine.git",
+       branch: "main",
+       sparse: "apps/antidotec_pb",
+       override: true},
       {:ecto, "~> 3.8", override: true},
       {:jason, "~> 1.2"}
     ]

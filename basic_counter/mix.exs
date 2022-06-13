@@ -46,7 +46,17 @@ defmodule Counters.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:vax, git: "https://github.com/vaxine-io/vax.git", branch: "feat/raw-insert-update-impl"},
+      {:vax, git: "https://github.com/vaxine-io/vaxine.git", branch: "main", sparse: "apps/vax"},
+      {:antidote_pb_codec,
+       git: "git@github.com:vaxine-io/vaxine.git",
+       branch: "main",
+       sparse: "apps/antidote_pb_codec",
+       override: true},
+      {:antidotec_pb,
+       git: "git@github.com:vaxine-io/vaxine.git",
+       branch: "main",
+       sparse: "apps/antidotec_pb",
+       override: true},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
