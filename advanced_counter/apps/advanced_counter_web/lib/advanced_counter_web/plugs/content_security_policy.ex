@@ -4,7 +4,7 @@ defmodule AdvancedCounterWeb.Plugs.ContentSecurityPolicy do
 
   def init(_),
     do:
-      Application.get_env(:basic_counter, __MODULE__, [])
+      Application.get_env(:advanced_counter_web, __MODULE__, [])
       |> build_header()
 
   def call(conn, header) do
