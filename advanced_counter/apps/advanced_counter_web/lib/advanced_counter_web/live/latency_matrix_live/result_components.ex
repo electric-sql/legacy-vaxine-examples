@@ -14,33 +14,35 @@ defmodule AdvancedCounterWeb.LatencyMatrixLive.ResultComponents do
       |> assign(:deviation_map, deviation_map(assigns.latency_map, mean, deviation))
 
     ~H"""
-    <table>
-      <tr>
-        <th class="font-normal"></th>
-        <%= for {_, name} <- @relays do %>
-          <th class="font-normal p-2 px-4">
-            <%= name %>
-          </th>
-        <% end %>
-      </tr>
-      <%= for db <- @databases do %>
-        <tr class={if db == "antidote", do: "bg-slate-100 dark:bg-whiteish-invert"}>
-          <th class="font-normal p-2 pr-4"><%= @database_data[db].name %></th>
-          <%= for {server, name} <- @relays do %>
-            <td class="p-3 border-l-[1px] border-slate-200 text-center">
-              <%= case @latency_map[server][db] do %>
-                <% {:ok, value} -> %>
-                  <.latency value={value} deviations={@deviation_map[server][db]} />
-                <% {:error, reason} -> %>
-                  <.latency_error id={"error-#{name}-#{db}"} reason={reason} />
-              <% end %>
-            </td>
+    <div class="overflow-x-auto">
+      <table>
+        <tr>
+          <th class="font-normal"></th>
+          <%= for {_, name} <- @relays do %>
+            <th class="font-normal p-2 px-4">
+              <%= name %>
+            </th>
           <% end %>
         </tr>
-      <% end %>
-    </table>
+        <%= for db <- @databases do %>
+          <tr class={if db == "antidote", do: "bg-slate-100 dark:bg-whiteish-invert"}>
+            <th class="font-normal p-2 pr-4"><%= @database_data[db].name %></th>
+            <%= for {server, name} <- @relays do %>
+              <td class="p-3 border-l-[1px] border-slate-200 text-center">
+                <%= case @latency_map[server][db] do %>
+                  <% {:ok, value} -> %>
+                    <.latency value={value} deviations={@deviation_map[server][db]} />
+                  <% {:error, reason} -> %>
+                    <.latency_error id={"error-#{name}-#{db}"} reason={reason} />
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    </div>
 
-    <div class="mt-4 vaxine-prose max-w-full dark:prose-invert">
+    <div class="mt-10 vaxine-prose max-w-full dark:prose-invert prose-headings:mt-4 prose-headings:mb-2">
       <h2>What exactly are we comparing</h2>
       <p>
         This example application sends write operations (counter increments) from
