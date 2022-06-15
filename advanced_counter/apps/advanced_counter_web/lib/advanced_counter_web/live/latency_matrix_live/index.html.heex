@@ -33,7 +33,7 @@
         "#{if @state == :complete, do: "scale-90"} transition-transform origin-top duration-300"
       }
     />
-    <div class={
+    <div id="overlay" class={
       "my-4 bg-white p-4 rounded shadow dark:bg-blackish absolute transition-all duration-300 w-full
           #{if @state == :complete, do: "top-10", else: "top-full"}
           #{if @state == :ready, do: "invisible opacity-0", else: "visible opacity-100"}"
