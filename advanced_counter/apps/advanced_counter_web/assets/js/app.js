@@ -35,7 +35,6 @@ Hooks.TriggerAnimation = {
     this.phase = this.startPhase();
     this.listener = this.handleEvent(this.trigger, ({ step }) => {
       if (step == this.phase) {
-        console.log(this.delay());
         setTimeout(() => this.el.beginElement(), this.delay());
       }
     });
@@ -76,7 +75,7 @@ Hooks.WithTooltip = {
         this.tooltip.classList.toggle("hidden", true)
       )
     );
-  }
+  },
 };
 
 let csrfToken = document
@@ -98,6 +97,26 @@ let liveSocket = new LiveSocket("/live", Socket, {
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
 window.addEventListener("phx:page-loading-start", (info) => topbar.show());
 window.addEventListener("phx:page-loading-stop", (info) => topbar.hide());
+
+if (window.top) {
+  const resizeObserver = new ResizeObserver((entries) => {
+    const newHeight = entries[0].target.clientHeight;
+
+    window.top.postMessage(
+      {
+        height:
+          newHeight +
+          document.getElementById("overlay").offsetParent.offsetTop +
+          document.getElementById("overlay").offsetParent.offsetHeight +
+          50,
+      },
+      "*"
+    );
+  });
+
+  // start observing a DOM node
+  resizeObserver.observe(document.getElementById("overlay"));
+}
 
 // connect if there are any LiveViews on the page
 liveSocket.connect();

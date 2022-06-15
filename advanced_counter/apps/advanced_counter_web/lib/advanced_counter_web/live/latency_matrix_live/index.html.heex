@@ -10,7 +10,7 @@
     </p>
   </div>
   <button
-    class="bg-accent hover:bg-accent-light dark:bg-accent-dark dark:hover:bg-accent transition-colors p-2 px-10 mt-3 w-auto text-accent-foreground font-bold rounded disabled:bg-slate-300"
+    class="bg-accent hover:bg-accent-light dark:bg-accent-dark dark:hover:bg-accent transition-colors p-2 px-10 mt-3 mb-6 w-auto text-accent-foreground font-bold rounded disabled:bg-slate-300"
     phx-click="test-latency"
     disabled={@state not in [:ready, :complete]}
   >
@@ -33,7 +33,7 @@
         "#{if @state == :complete, do: "scale-90"} transition-transform origin-top duration-300"
       }
     />
-    <div class={
+    <div id="overlay" class={
       "my-4 bg-white p-4 rounded shadow dark:bg-blackish absolute transition-all duration-300 w-full
           #{if @state == :complete, do: "top-10", else: "top-full"}
           #{if @state == :ready, do: "invisible opacity-0", else: "visible opacity-100"}"
