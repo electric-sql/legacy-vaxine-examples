@@ -35,7 +35,6 @@ Hooks.TriggerAnimation = {
     this.phase = this.startPhase();
     this.listener = this.handleEvent(this.trigger, ({ step }) => {
       if (step == this.phase) {
-        console.log(this.delay());
         setTimeout(() => this.el.beginElement(), this.delay());
       }
     });
