@@ -33,7 +33,7 @@ if config_env() == :prod do
 
   config :basic_counter, Counters.Repo,
     port: String.to_integer(System.get_env("ANTIDOTE_DB_PORT") || "8087"),
-    address: hostname,
+    hostname: hostname,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
